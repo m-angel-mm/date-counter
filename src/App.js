@@ -1,23 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Counter />
+    </div>
+  );
+}
+
+function Counter() {
+  const [counter, setCounter] = useState(1);
+  const [step, setStep] = useState(0);
+  const date = new Date();
+
+  date.setDate(date.getDate() + counter);
+
+  function decreaseCounter() {
+    setCounter((c) => c - step);
+  }
+
+  function increaseCounter() {
+    setCounter((c) => c + step);
+  }
+
+  return (
+    <div>
+      <div>
+        <input
+          type="range"
+          min={0}
+          max={10}
+          onChange={(e) => setStep(Number(e.target.value))}
+        />
+        <span>Step: {step}</span>
+      </div>
+      <div>
+        <button onClick={decreaseCounter}>-</button>
+        <input
+          type="text"
+          value={counter}
+          onChange={(e) => setCounter(Number(e.target.value))}
+        />
+        <button onClick={increaseCounter}>+</button>
+      </div>
+      <span>{date.toString()}</span>
+      <div>
+        <button>reset</button>
+      </div>
     </div>
   );
 }
